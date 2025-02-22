@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Movie List</title>
     <style>
         body {
             background-color: #1e1e1e;
             color: #fff;
             text-align: center;
             margin: 20px;
-
         }
         .container {
             width: 90%;
@@ -18,13 +17,11 @@
             background-color: #2a2a2a;
             padding: 20px;
             border-radius: 20px;
-            box-shadow: 0px 4px 10px;
+            box-shadow: 0px 4px 10px #000;
         }
         h2 {
             color: #ff4757;
-
         }
-
         input {
             width: 70%;
             padding: 8px;
@@ -32,9 +29,7 @@
             border-radius: 5px;
             margin-bottom: 10px;
             outline: none;
-
         }
-
         button {
             background-color: #ff4757;
             color: white;
@@ -44,9 +39,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            box-sizing: border-box;
         }
-
         button:hover {
             background-color: #e84118;
         }
@@ -58,68 +51,64 @@
             margin: 10px 0;
             border-radius: 5px;
             text-align: left;
-
         }
         .movie-card img {
             width: 80px;
             height: 100px;
-            border: 5px;
             margin-right: 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>my movie list  uurchulj uzej bainaa</h2>
-        <input type="text" id="searchInput" placeholder="searrchMovie....">
-        <button onclick="searchMovie()">search</button>
-        <button onclick="showUpperText()">tom useg</button>
-        <button onclick="filterType()">turluur haih</button>
-        <h3>ur dun:</h3>
+        <h2>My Movie List</h2>
+        <input type="text" id="searchInput" placeholder="Search Movie...">
+        <button onclick="searchMovie()">Search</button>
+        <h3>Үр дүн:</h3>
         <p id="result"></p>
-        <h3>buh kino</h3>
+        <h3>Бүх кино:</h3>
         <div id="movieList" class="movie-list"></div>
-
     </div>
 
     <script>
-        const movies = [{
-            title: "Inception",
-            genre: "Sci-Fi, Thriller",
-            image: "https://m.media-amazon.com/images/I/81p+xe8cbnL._AC_SY679_.jpg"
-        }, {
-            title: "Titanic",
-            genre: "Romance, Drama",
-            image: "https://m.media-amazon.com/images/I/71yXShgxvpL._AC_SY679_.jpg"
-        }, {
-            title: "Interstellar",
-            genre: "Sci-Fi, Adventure",
-            image: "https://picsum.photos/id/237/200/300"
-        }, {
-            title: "The Notebook",
-            genre: "Romance, Drama",
-            image: "https://picsum.photos/seed/picsum/200/300"
-        }, {
-            title: "Avengers",
-            genre: "Action, Sci-Fi",
-            image: "https://picsum.photos/id/23/200/300"
-        }];
+        const movies = [
+            { title: "Inception", genre: "Sci-Fi, Thriller", image: "https://m.media-amazon.com/images/I/81p+xe8cbnL._AC_SY679_.jpg" },
+            { title: "Titanic", genre: "Romance, Drama", image: "https://m.media-amazon.com/images/I/71yXShgxvpL._AC_SY679_.jpg" },
+            { title: "Interstellar", genre: "Sci-Fi, Adventure", image: "https://m.media-amazon.com/images/I/91cPo4mioeL._AC_SY679_.jpg" },
+            { title: "The Notebook", genre: "Romance, Drama", image: "https://m.media-amazon.com/images/I/71sugU6HDCL._AC_SY679_.jpg" },
+            { title: "Avengers", genre: "Action, Sci-Fi", image: "https://m.media-amazon.com/images/I/71NiBsvkwKL._AC_SY679_.jpg" }
+        ];
 
-        function displayMovies(list){
+        function displayMovies(list) {
             const movieList = document.getElementById('movieList');
             movieList.innerHTML = "";
-            list.forEach((movie)=>{
-                let div=document.createElement('div');
+            list.forEach(movie => {
+                let div = document.createElement('div');
                 div.classList.add('movie-card');
-                div.innerHTML = `<img src="${movie.image}">
-                <div class="movie-info">
-                    <h4>${movie.title}</h4>
-                    <p>${movie.genre}</p>
-                </div>`;
+                div.innerHTML = `
+                    <img src="${movie.image}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
+                    <div class="movie-info">
+                        <h4>${movie.title}</h4>
+                        <p>${movie.genre}</p>
+                    </div>`;
                 movieList.appendChild(div);
             });
-
         }
+
+        function searchMovie() {
+            let name = document.getElementById('searchInput').value.toLowerCase();
+            let oldson = movies.find((movie) => movie.title.toLowerCase() === name);
+            
+            if (oldson) {
+                document.getElementById('result').innerText = "Олдсон: " + oldson.title;
+                displayMovies([oldson]); 
+            } else {
+                document.getElementById('result').innerText = "Кино олдсонгүй!";
+                displayMovies(movies);
+            }
+        }
+
         displayMovies(movies);
     </script>
 </body>
